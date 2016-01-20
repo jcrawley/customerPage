@@ -1,0 +1,61 @@
+.header{
+	background-color: lightblue;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+h2{
+	font-size: 15px;
+    padding: 5px;
+    float: left;
+    margin: 5px;
+}
+.date {
+    font-weight: 700;
+}
+.description{
+	overflow: hidden;
+}
+.add-note{
+	float: right;
+}
+.note{
+	margin-top: 15px;
+	padding:15px;
+}
+.note .info{
+	float:left;
+}
+.note .note-icons{
+	float:right;
+    margin-right: 25px;
+}
+.note .comment {
+    padding-top: 10px;
+}
+.note .view-document{
+	margin-right: 25px;
+}
+/*icons*/
+.add-note:after{
+	content: url('./icons/icon-add-5.png');
+}
+.view-document:after{
+	content: url('./icons/icon-view-document.png');
+}
+.icon.delete-icon:after{
+	content: "";
+    width: 16px;
+    height: 16px;
+    background: transparent url("./icons/icon-delete-2.png") 0px 0px;
+    display: inline-block;
+}
+.icon.delete-icon:hover:after{
+    background: transparent url("./icons/icon-delete-2.png") -16px 0px;
+}
+.icon:after{
+    position: relative;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
