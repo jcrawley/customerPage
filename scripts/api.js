@@ -2,7 +2,7 @@
 window.generateInvoiceApi = function(){
 	var InvoiceApi = {};
 	var accessToken = 'jcrawleyIsAwesome';
-	var url = 'http://api.invoiceasap.com'
+	var url = 'http://api.invoiceasap.com?accesstoken=' + accessToken;
 
 	var doneFn = function(res){
 		return res;
@@ -13,9 +13,14 @@ window.generateInvoiceApi = function(){
 			action: 'GetCustomerNotes',
 			customerguid: customerId,
 			invoiceguid: invoiceId
-		}).done(doneFn)
-		.fail(function(){
-			return _JSONResponses.getCustomerNotes;
+		});
+	}
+
+	InvoiceApi.getCustomers = function(customerIds,excludeInactive){
+		return $.get(url, {
+			action: 'GetCustomers',
+			customerguids: customerIds,
+			excludeinactive: excludeInactive
 		});
 	}
 	return InvoiceApi;

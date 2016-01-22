@@ -9,19 +9,46 @@ h2{
     padding: 5px;
     float: left;
     margin: 5px;
+    font-weight: 300;
 }
-.date {
+.pii,
+.address {
+    padding: 10px;
+}
+.date,
+.label {
     font-weight: 700;
 }
 .description{
 	overflow: hidden;
 }
-.add-note{
+.row-label{
+    margin-right:20%;
+}
+.row-balance{
+    float: right;
+}
+.left{
+    float:left;
+    width: 50%;
+}
+.right{
+    float: right;
+    width: 50%;
+}
+.customer-stats,
+.customer-record{
+    width: 50%;
+    float: left;
+}
+.add-note,
+.edit-icon{
 	float: right;
 }
-.note{
-	margin-top: 15px;
-	padding:15px;
+.note {
+    margin: 15 0 0 15;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
 }
 .note .info{
 	float:left;
@@ -36,6 +63,15 @@ h2{
 .note .view-document{
 	margin-right: 25px;
 }
+
+.customer-notes{
+    height: 100vh;
+}
+#customer-notes-body{
+    overflow-y: scroll;
+    height: 94%; 
+}
+
 /*icons*/
 .add-note:after{
 	content: url('./icons/icon-add-5.png');
@@ -52,6 +88,15 @@ h2{
 }
 .icon.delete-icon:hover:after{
     background: transparent url("./icons/icon-delete-2.png") -16px 0px;
+}
+.edit-icon:after{
+    content: url('./icons/icon-edit-4.png');
+}
+.mail-icon.icon:after{
+    content: url('./icons/icon-send-2.png');
+    top: 0;
+    right: 0;
+    margin-right: 5px;
 }
 .icon:after{
     position: relative;
