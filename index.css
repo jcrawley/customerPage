@@ -23,10 +23,19 @@ h2{
 	overflow: hidden;
 }
 .row-label{
-    margin-right:20%;
+    width: 50%;
+    display: inline-block;
 }
 .row-balance{
     float: right;
+}
+.row-num{
+    width:10%;
+    text-align: center;
+    display: inline-block;
+}
+.invoice-row{
+    padding: 2px 5px;
 }
 .left{
     float:left;
@@ -41,14 +50,48 @@ h2{
     width: 50%;
     float: left;
 }
+.customer-record .description{
+    border-right: 1px solid lightgrey;
+}
+.customer-stats .label{
+    margin: 15px 0;
+}
+.contact-list{
+    margin-top: 10px;
+}
+.contact-list div{
+    display: inline-block;
+    float: left;
+}
+.contact-list > div {
+    display: block;
+    float: none;
+}
+.contact-list .action{
+    width: 20%;
+}
+.contact-list .name{
+    width: 40%;
+}
+.contact-list .address{
+    width: 40%;
+    padding: 0;
+}
 .add-note,
 .edit-icon{
 	float: right;
+}
+.contact-list .edit-icon{
+    float: left;
+    margin-right: 5px;
 }
 .note {
     margin: 15 0 0 15;
     padding-bottom: 10px;
     border-bottom: 1px solid grey;
+}
+#total-balance{
+    float: right;
 }
 .note .info{
 	float:left;
@@ -85,6 +128,11 @@ h2{
     height: 16px;
     background: transparent url("./icons/icon-delete-2.png") 0px 0px;
     display: inline-block;
+}
+.icon.edit-icon:after{
+    top:0;
+    right:0;
+    margin-right: 2px;
 }
 .icon.delete-icon:hover:after{
     background: transparent url("./icons/icon-delete-2.png") -16px 0px;

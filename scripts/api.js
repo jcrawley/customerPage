@@ -23,6 +23,22 @@ window.generateInvoiceApi = function(){
 			excludeinactive: excludeInactive
 		});
 	}
+	InvoiceApi.getCustomerStats = function(customerId,options){
+		return $.get(url, {
+			action: 'GetCustomerStats',
+			customerguid: customerId,
+			startdate: options ? options.startdate : {},
+			enddate: options? options.startdate : {}
+		});
+	}
+	InvoiceApi.getCustomerDocumentStats = function(customerId,options){
+		return $.get(url, {
+			action: 'GetCustomerDocumentStats',
+			customerguid: customerId,
+			startdate: options ? options.startdate : {},
+			enddate: options? options.startdate : {}
+		});
+	}
 	return InvoiceApi;
 
 }
