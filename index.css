@@ -91,6 +91,7 @@ div#add-note-body{
     width: 100%;
     height: 100%;
     display: none;
+    padding: 15px;
 }
 div#add-note-button {
     float: right;
@@ -138,6 +139,12 @@ div#add-note-button {
     height: 94%; 
 }
 span.label.timestamp {
+    margin-left: 5%;
+}
+div#company-name {
+    margin: 10px;
+}
+select#company-select{
     margin-left: 5%;
 }
 /*icons*/

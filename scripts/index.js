@@ -1,6 +1,7 @@
 $(document).ready(function(){
     InvoiceApi = window.generateInvoiceApi();
 
+    var companyName;
     var custId = 'eb627abe-2735-11e4-ae4f-025ae7f06885';
 
     /* All my API promises have empty success functions because 
@@ -15,6 +16,10 @@ $(document).ready(function(){
     .then()
     .fail(function(){
 			var response = _JSONResponses.getCustomers;
+			companyName = response.customers[0].companyname;
+			$('#company-name').text(companyName);
+			$('#company-select').append('<option value =\'' + companyName + '\'>' +
+				companyName + '</option>');
 			setUpCustomer(response.customers[0]);
 		});
 
@@ -57,29 +62,50 @@ $(document).ready(function(){
     	$('#add-note-body .label.timestamp').text(formatTime(date.toISOString()));
     });
 
+    $('#add-note-button').click(function(){
+    	if(!$('#add-note-area').val()){
+    		alert('Please give your note a body');
+    	}
+    	else{
+    		InvoiceApi.addNote(custId, 1,$('#add-note-area').val())
+    		.then()
+    		.fail(function(){
+    			var response = _JSONResponses.addCustomerNote;
+    			var note = createNote(response.customer_note);
+    			$('#customer-notes-body').prepend(note);
+    			$('#add-note-body').css('display','none');
+    			$('#customer-notes-body').css('display','block');
+    		})
+    	}
+    });
+
     function formatTime(date){
     	var arr = date.split('T');
     	arr[1] = arr[1].split('.');
     	return arr[0] + ' ' + arr[1][0];
     }
 
+    function createNote(element){
+    	var note = $('<div class="note" id="' + element.id + '"></div>');
+		var description = $('<div class="description"></div>');
+		var date = $('<div class="date"></div>').text(element.modifiedon);
+		var info = $('<div class="info"></div>');
+		var custNameDiv = $('<div></div>').text('Job/Location ' + element.customer.companyname);
+		var createdByDiv = $('<div></div>').text('Created By: ' + element.user.firstname + ' ' + element.user.lastname);
+		var invoiceDiv;
+		if(element.invoice){
+			var invoiceDiv = $('<div></div>').text('Invoice: ' + element.invoice.number);
+		}
+		var commentDiv = $("<div class='comment'></div>").text(element.note);
+		info.append(date, custNameDiv,createdByDiv,invoiceDiv);
+		description.append(info, generateNoteIcons());
+		note.append(description, commentDiv);
+		return note
+    }
+
     function generateNotes(notes){
 		notes.forEach(function(element){
-			var note = $('<div class="note" id="' + element.id + '"></div>');
-			var description = $('<div class="description"></div>');
-			var date = $('<div class="date"></div>').text(element.modifiedon);
-			var info = $('<div class="info"></div>');
-			var custNameDiv = $('<div></div>').text('Job/Location ' + element.customer.companyname);
-			var createdByDiv = $('<div></div>').text('Created By: ' + element.user.firstname + ' ' + element.user.lastname);
-			var invoiceDiv;
-			if(element.invoice){
-				var invoiceDiv = $('<div></div>').text('Invoice: ' + element.invoice.number);
-			}
-			var commentDiv = $("<div class='comment'></div>").text(element.note);
-			info.append(date, custNameDiv,createdByDiv,invoiceDiv);
-			description.append(info, generateNoteIcons());
-			note.append(description, commentDiv);
-			$('#customer-notes-body').append(note);
+			$('#customer-notes-body').append(createNote(element));
 		});
 	}
 
@@ -94,7 +120,11 @@ $(document).ready(function(){
 		$('#customer-phone').html(customer.phone);
 		$('#customer-mobile').html(customer.mobile);
 		$('#customer-mail').html('<span class="mail-icon icon"></span>' + customer.email);
+		setUpJobs(customer);
+		setUpContacts(customer);
+	}
 
+	function setUpJobs(customer){
 		customer.jobs.forEach(function(element){
 			var wrapperDiv = $('<div></div>');
 			var buttons = $('<div class="action"><span class="edit-icon icon"></span> <span class="mail-icon icon"></span></div>');
@@ -102,6 +132,12 @@ $(document).ready(function(){
 			var addressDiv = $('<div class="address">' + element.contacts[0].shippingaddress[0].addr1 + '</div>');
 			wrapperDiv.append(buttons, nameDiv, addressDiv);
 			$('#jobs-table').append(wrapperDiv);
+		});
+	}
+
+	function setUpContacts(customer){
+		customer.contacts.forEach(function(element){
+
 		});
 	}
 

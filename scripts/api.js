@@ -21,7 +21,15 @@ window.generateInvoiceApi = function(){
 			id: id
 		});
 	}
-
+	InvoiceApi.addNote = function(cid, uid, note, invoiceguid){
+		return $.post(url, {
+			action: 'AddCustomerNote',
+			customerguid: cid,
+			userguid: uid,
+			invoiceguid: invoiceguid,
+			note : note
+		});
+	}
 	InvoiceApi.getCustomers = function(customerIds,excludeInactive){
 		return $.get(url, {
 			action: 'GetCustomers',
