@@ -39,10 +39,35 @@ $(document).ready(function(){
 			generateNotes(response.customer_notes);
 		});
 
+    $('#customer-notes-body').click(function(event){
+    	console.log(event.target.id);
+    	if(event.target.classList.contains('delete-icon')){
+    		var id = event.target.parentElement.parentNode.parentNode.id;
+    		if(event.target.parentElement && event.target.parentElement.parentNode && event.target.parentElement.parentNode.parentNode){
+    			$(event.target.parentElement.parentNode.parentNode).css('display', 'none');
+    			InvoiceApi.deleteNote(id);
+    		}
+    	}
+    });
+
+    $('#plus-add-note').click(function(){
+    	$('#add-note-body').css('display','block');
+    	$('#customer-notes-body').css('display','none');
+    	var date = new Date();
+    	$('#add-note-body .label.timestamp').text(formatTime(date.toISOString()));
+    });
+
+    function formatTime(date){
+    	var arr = date.split('T');
+    	arr[1] = arr[1].split('.');
+    	return arr[0] + ' ' + arr[1][0];
+    }
+
     function generateNotes(notes){
 		notes.forEach(function(element){
-			var note = $('<div class="note"></div>');
+			var note = $('<div class="note" id="' + element.id + '"></div>');
 			var description = $('<div class="description"></div>');
+			var date = $('<div class="date"></div>').text(element.modifiedon);
 			var info = $('<div class="info"></div>');
 			var custNameDiv = $('<div></div>').text('Job/Location ' + element.customer.companyname);
 			var createdByDiv = $('<div></div>').text('Created By: ' + element.user.firstname + ' ' + element.user.lastname);
@@ -51,7 +76,7 @@ $(document).ready(function(){
 				var invoiceDiv = $('<div></div>').text('Invoice: ' + element.invoice.number);
 			}
 			var commentDiv = $("<div class='comment'></div>").text(element.note);
-			info.append(custNameDiv,createdByDiv,invoiceDiv);
+			info.append(date, custNameDiv,createdByDiv,invoiceDiv);
 			description.append(info, generateNoteIcons());
 			note.append(description, commentDiv);
 			$('#customer-notes-body').append(note);
@@ -74,7 +99,7 @@ $(document).ready(function(){
 			var wrapperDiv = $('<div></div>');
 			var buttons = $('<div class="action"><span class="edit-icon icon"></span> <span class="mail-icon icon"></span></div>');
 			var nameDiv = $('<div class="name">' + element.companyname + '</div>');
-			var addressDiv = $('<div class="address">' + element.contactname + '</div>');
+			var addressDiv = $('<div class="address">' + element.contacts[0].shippingaddress[0].addr1 + '</div>');
 			wrapperDiv.append(buttons, nameDiv, addressDiv);
 			$('#jobs-table').append(wrapperDiv);
 		});

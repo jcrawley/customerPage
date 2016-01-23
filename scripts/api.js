@@ -15,6 +15,12 @@ window.generateInvoiceApi = function(){
 			invoiceguid: invoiceId
 		});
 	}
+	InvoiceApi.deleteNote = function(id){
+		return $.post(url, {
+			action: 'DeleteCustomerNote',
+			id: id
+		});
+	}
 
 	InvoiceApi.getCustomers = function(customerIds,excludeInactive){
 		return $.get(url, {
