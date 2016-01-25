@@ -50,7 +50,7 @@ window.generateInvoiceApi = function(){
 			action: 'GetCustomerDocumentStats',
 			customerguid: customerId,
 			startdate: options ? options.startdate : {},
-			enddate: options? options.startdate : {}
+			enddate: options? options.enddate : {}
 		});
 	}
 	return InvoiceApi;

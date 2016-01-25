@@ -48,25 +48,94 @@
               <div id="invoice-graph">
                 <div class="label">Aging</div>
                 <hr>
-                <div id="invoice-table">
-                </div>
+                <div id="invoice-table"></div>
+                <div class='time-span'>
+            		
+        			<div class='current-date-span'>
+        				<div class="date-display">
+        					<span class="calendar-icon icon"></span>
+        					<div class='date-wrapper'>
+        						<span id='start-date'>1/1/2016</span>
+		        					-
+		        				<span id='end-date'>3/1/2016</span>
+		        				<span class='arrow-down'></span>
+        					</div>
+	        				<div class="change-date-display none">
+	        					<span>Start Date</span>
+	        					<input id="start-date-input" type="text" placeholder = "MM/DD/YYY" value = "1/1/2016"></input>
+	        					<span>End Date</span>
+	        					<input id="end-date-input" type="text" placeholder = "MM/DD/YYY" value = "3/1/2016"></input>
+	        					<div class="button view-statement" id='change-date'>Change Date</div>
+	        				</div>
+        				</div>
+        			</div>
+        			<div class='stat-group'>
+	        			<span class='label'>Invoices</span>
+	        			<hr>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Unpaid</div>
+	        				<span class="row-balance view-document icon" id="invoices-unpaid"></span>
+	        			</div>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Paid</div>
+	        				<span class="row-balance view-document icon" id="invoices-paid"></span>
+	        			</div>
+	        		</div>
+	        		<div class='stat-group'>
+	        			<span class='label'>Estimates</span>
+	        			<hr>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Open</div>
+	        				<span class="row-balance view-document icon" id="estimates-open"></span>
+	        			</div>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Approved</div>
+	        				<span class="row-balance view-document icon" id="estimates-approved"></span>
+	        			</div>
+	        		</div>
+	        		<div class='stat-group'>
+	        			<span class='label'>Sales Receipts</span>
+	        			<hr>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Paid</div>
+	        				<span class="row-balance view-document icon" id="sales-receipts"></span>
+	        			</div>
+	        		</div>
+	        		<div class='stat-group'>
+	        			<span class='label'>Sales Orders</span>
+	        			<hr>
+	        			<div class="invoice-row">
+	        				<div class="row-label">Submitted</div>
+	        				<span class="row-balance view-document icon" id="sales-orders"></span>
+	        			</div>
+	        		</div>
+	        		<div class="button view-statement">View Statement</div>
+            	</div>
               </div>
             </div>
           </div>
         </div>
         <div class="bottom">
         	<div class="header">
-        		<h2>Jobs/Locations | Contacts</h2>
+        		<h2>
+        			<a id="jobs-title" class="label">Jobs/Locations</a> | <a id='contacts-title'>Contacts</a></h2>
         		<span class="add-note icon"></span>
         	</div>
-        	<div class="contact-list" id='jobs-table'>
-        		<div><div class="action label">Action</div>
-        		<div class="name label">Name</div>
-        		<div class="address label">Address</div></div>
-<!--         		
-        		<div class="action"></div>
-        		<div class="name">Name</div>
-        		<div class="address">Address</div> -->
+        	<div class="table">
+        		<div class="contact-list" id='jobs-table'>
+	        		<div><div class="action label">Action</div>
+	        		<div class="name label">Name</div>
+	        		<div class="address label">Address</div></div>
+	<!--         		
+	        		<div class="action"></div>
+	        		<div class="name">Name</div>
+	        		<div class="address">Address</div> -->
+	        	</div>
+	        	<div class="contact-list" id='contact-table'>
+	        		<div><div class="action label">Action</div>
+	        		<div class="name label">Name</div>
+	        		<div class="address label">Address</div></div>
+	        	</div>
         	</div>
         </div>
       </div>
@@ -105,7 +174,7 @@
         </div>
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="./vendor/jquery-2.js"></script>
     <script type="text/javascript" src="./jsonResponses/GetCustomerNotes.js"></script>
     <script type="text/javascript" src="./jsonResponses/GetCustomers.js"></script>
     <script type="text/javascript" src="./jsonResponses/GetCustomerStats.js"></script>

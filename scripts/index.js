@@ -34,7 +34,7 @@ $(document).ready(function(){
     .then()
     .fail(function(){
 			var response = _JSONResponses.getCustomerDocumentStats;
-			// generateInvoiceTable(response.customer_stats);
+			generateDocumentStats(response.customer_document_stats);
 		});
 
     InvoiceApi.getNotes(custId)
@@ -78,7 +78,52 @@ $(document).ready(function(){
     		})
     	}
     });
+    $('#jobs-title').click(function(){
+    	$('#jobs-table').css('display', 'block');
+    	$('#contact-table').css('display', 'none');
+    	$('#contacts-title').toggleClass('label');
+    	$('#jobs-title').toggleClass('label');
+    });
+    $('#contacts-title').click(function(){
+    	$('#jobs-table').css('display', 'none');
+    	$('#contact-table').css('display', 'block');
+    	$('#contacts-title').toggleClass('label');
+    	$('#jobs-title').toggleClass('label');
+    });
+    $('.date-wrapper').click(function(){
+    	$(".change-date-display").toggleClass('none');
+    });
+    $('#change-date').click(function(){
+    	var startDiv = $('#start-date-input');
+    	var endDiv = $('#end-date-input');
+    	if(!startDiv.val() || !endDiv.val()){
+    		alert("Please enter a start and end date");
+    	}
+    	else{
+    		var start = new Date(startDiv.val());
+    		var end = new Date(endDiv.val());
+    		if(end > start){
+    			$('#start-date').text(startDiv.val());
+    			$('#end-date').text(endDiv.val());
+    			InvoiceApi.getCustomerDocumentStats(custId, 
+    				{
+    					startdate: formatTime(start.toISOString()),
+    					enddate: formatTime(end.toISOString())
+    				})
+    			.then()
+    			.fail(function(){
+    				var response = _JSONResponses.getCustomerDocumentStats;
+					generateDocumentStats(response.customer_document_stats);
+					$(".change-date-display").toggleClass('none');
+    			});
+    		}
+    		else{
+    			alert('Your start date must be before your end date!');
+    		}
+    	}
 
+
+    });
     function formatTime(date){
     	var arr = date.split('T');
     	arr[1] = arr[1].split('.');
@@ -127,18 +172,55 @@ $(document).ready(function(){
 	function setUpJobs(customer){
 		customer.jobs.forEach(function(element){
 			var wrapperDiv = $('<div></div>');
-			var buttons = $('<div class="action"><span class="edit-icon icon"></span> <span class="mail-icon icon"></span></div>');
 			var nameDiv = $('<div class="name">' + element.companyname + '</div>');
-			var addressDiv = $('<div class="address">' + element.contacts[0].shippingaddress[0].addr1 + '</div>');
+			var addressDiv = $('<div class="address">' + getAddress(element.contacts[0].shippingaddress[0]) + '</div>');
+			var buttons = generateContactIcons(element.contacts[0].shippingaddress[0].city);
 			wrapperDiv.append(buttons, nameDiv, addressDiv);
 			$('#jobs-table').append(wrapperDiv);
 		});
 	}
 
+	function getAddress(addr){
+		var keys = Object.keys(addr);
+		var line1 = '';
+		var line2 = '';
+		keys.forEach(function(element){
+			if(element.indexOf('addr') > -1){
+				line1 += addr[element] + ' ';
+			}
+			else{
+				line2 += addr[element] + ' ';
+			}
+		});
+		return (line1 + '<br>' + line2);
+	}
+
 	function setUpContacts(customer){
 		customer.contacts.forEach(function(element){
-
+			var wrapperDiv = $('<div></div>');
+			var nameDiv = $('<div class="name">' + element.contactname + '</div>');
+			var addressDiv = $('<div class="address">' + element.email + '</div>');
+			var buttons = generateContactIcons(element.email);
+			wrapperDiv.append(buttons, nameDiv, addressDiv);
+			$('#contact-table').append(wrapperDiv);
 		});
+	}
+
+	function generateContactIcons(noEmail){
+		if(noEmail){
+			return $('<div class="action"><span class="edit-icon icon"></span> <span class="mail-icon icon"></span></div>');
+		}
+		return $('<div class="action"><span class="edit-icon icon"></span></div>');
+	}
+
+	function generateDocumentStats(stats){
+		$('#invoices-unpaid').text(parseFloat(stats.sum_balance_due).toLocaleString());
+		$('#invoices-paid').text(parseFloat(stats.sum_payments).toLocaleString());
+		$('#invoices-paid').css('color', 'green')
+		$('#estimates-open').text(parseFloat(stats.sum_open_estimates).toLocaleString());
+		$('#estimates-approved').text(parseFloat(stats.sum_approved_estimates).toLocaleString());
+		$('#sales-orders').text(parseFloat(stats.sum_sales_orders).toLocaleString());
+		$('#sales-receipts').text(parseFloat(stats.sum_sales_receipts).toLocaleString());
 	}
 
 	var statsLib = {

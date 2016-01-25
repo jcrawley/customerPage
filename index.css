@@ -1,8 +1,26 @@
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid navy;
+    position: relative;
+    top: 10px;
+    display: none;
+}
+.date-display:hover .arrow-down{
+    display: inline;
+}
+.wrapper{
+    overflow: hidden;
+    height: 100%;
+}
 .header{
 	background-color: lightblue;
     display: block;
     width: 100%;
     overflow: hidden;
+    float:left;
 }
 h2{
 	font-size: 15px;
@@ -93,13 +111,33 @@ div#add-note-body{
     display: none;
     padding: 15px;
 }
-div#add-note-button {
+div.button {
     float: right;
     margin: 0 10%;
     padding: 5px 20px;
     background-color: greenyellow;
     border: 1px solid grey;
     cursor: pointer;
+}
+div.button.view-statement{
+    background-color: navy;
+    color: white;
+    margin: 10px 0;
+}
+.bottom,
+.top{
+    height: 50%; 
+}
+#invoice-graph .label{
+    margin: 0px;
+}
+.left .description,
+.stat-body{
+    overflow-y: scroll; 
+    height: 100%
+}
+.stat-body{
+    padding:0 5%;
 }
 .add-note,
 .edit-icon{
@@ -130,13 +168,16 @@ div#add-note-button {
 .note .view-document{
 	margin-right: 25px;
 }
-
+#contact-table{
+    display: none;
+}
 .customer-notes{
-    height: 100vh;
+    height: 100%;
 }
 #customer-notes-body{
     overflow-y: scroll;
-    height: 94%; 
+    height: 95%; 
+    float: left;
 }
 span.label.timestamp {
     margin-left: 5%;
@@ -146,6 +187,46 @@ div#company-name {
 }
 select#company-select{
     margin-left: 5%;
+}
+.table{
+    overflow-y: scroll;
+    height: 100%;
+    float: left;
+    width: 100%;
+}
+.date-display{
+    padding: 10px;
+    cursor: pointer;
+}
+.date-wrapper{
+    position: relative;
+    top: 5px;
+}
+input{
+    display: block;
+    width: 100%;
+}
+div.stat-group{
+    margin:10px 0;
+}
+.change-date-display {
+    border: 1px solid grey;
+    margin-top: 10px;
+    padding: 5px;
+    overflow: hidden;
+}
+.none{
+    display: none;
+}
+.time-span .view-document.icon{
+    margin-right: 5px;
+}
+a:hover{
+    font-weight: 700;
+    cursor: pointer;
+}
+.calendar-icon{
+    float: left;
 }
 /*icons*/
 .add-note:after{
@@ -172,15 +253,24 @@ select#company-select{
 .edit-icon:after{
     content: url('./icons/icon-edit-4.png');
 }
+.icon.calendar-icon:after{
+    content: url('./icons/icon-calendar.png');
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+}
 .mail-icon.icon:after{
     content: url('./icons/icon-send-2.png');
     top: 0;
     right: 0;
-    margin-right: 5px;
 }
 .icon:after{
     position: relative;
     top: 10px;
     right: 10px;
     cursor: pointer;
+}
+.time-span .view-document.icon:after{
+    top: 0;
+    left: 5px;
 }
